@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Minuman</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #004953;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .menu-detail {
+            margin: 2rem auto;
+            max-width: 600px;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .menu-detail h2 {
+            text-align: center;
+            color: #004953;
+        }
+        .menu-detail ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu-detail li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        .order-form {
+            margin-top: 2rem;
+        }
+        .order-form label {
+            display: block;
+            margin: 0.5rem 0 0.25rem;
+            font-weight: bold;
+        }
+        .order-form input,
+        .order-form select,
+        .order-form button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .order-form button {
+            background-color: #004953;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .order-form button:hover {
+            background-color: #006f70;
+        }
+        .cart {
+            margin-top: 2rem;
+        }
+        .cart h3 {
+            text-align: center;
+            color: #004953;
+        }
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+        .cart li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cart-total {
+            text-align: center;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .cart button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #004953;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .cart button:hover {
+            background-color: #006f70;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Menu Minuman</h1>
+    </header>
+    <section class="menu-detail">
+        <h2>Daftar Menu</h2>
+        <ul>
+            <li>
+                <span>Es Teh Manis</span>
+                <span>Rp4.000</span>
+            </li>
+            <li>
+                <span>Nutrisai</span>
+                <span>Rp5.000</span>
+            </li>
+            <li>
+                <span>Pop Ice</span>
+                <span>Rp5.000</span>
+            </li>
+            <li>
+                <span>Jus Alpukat</span>
+                <span>Rp8.000</span>
+            </li>
+        </ul>
+        <form class="order-form">
+            <h3>Pesan Minuman</h3>
+            <label for="menu">Pilih Menu</label>
+            <select id="menu" name="menu">
+                <option value="Es Teh Manis">Es Teh Manis - Rp4.000</option>
+                <option value="Nutrisai">Nutrisai - Rp5.000</option>
+                <option value="Pop Ice">Pop Ice - Rp5.000</option>
+                <option value="Jus Alpukat">Jus Alpukat - Rp8.000</option>
+            </select>
+            <label for="quantity">Jumlah</label>
+            <input type="number" id="quantity" name="quantity" min="1" placeholder="Masukkan jumlah">
+            <button type="button" onclick="addToCart()">Tambah ke Keranjang</button>
+        </form>
+    </section>
+    <section class="cart">
+        <h3>Keranjang</h3>
+        <ul id="cart-list"></ul>
+        <div class="cart-total" id="cart-total">Total Harga: Rp0</div>
+        <button type="button" onclick="redirectToPayment()">Pesan Sekarang</button>
+    </section>
+    <script>
+        const cart = [];
+        const prices = {
+            "Es Teh Manis": 4000,
+            "Nutrisai": 5000,
+            "Pop Ice": 5000,
+            "Jus Alpukat": 8000
+        };
+
+        function addToCart() {
+            const menu = document.getElementById('menu').value;
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+
+            if (!quantity || quantity < 1) {
+                alert('Silakan masukkan jumlah yang valid.');
+                return;
+            }
+
+            cart.push({ menu, quantity, price: prices[menu] * quantity });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const cartTotal = document.getElementById('cart-total');
+
+            cartList.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item) => {
+                total += item.price;
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.menu} x${item.quantity}</span>
+                    <span>Rp${item.price.toLocaleString()}</span>
+                `;
+                cartList.appendChild(li);
+            });
+
+            cartTotal.innerText = `Total Harga: Rp${total.toLocaleString()}`;
+        }
+
+        function redirectToPayment() {
+            if (cart.length === 0) {
+                alert('Keranjang Anda kosong. Tambahkan menu terlebih dahulu.');
+                return;
+            }
+
+            const cartData = encodeURIComponent(JSON.stringify(cart));
+            const paymentUrl = `pembayaran.html?cart=${cartData}`;
+            window.open(paymentUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
