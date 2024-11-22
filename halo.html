@@ -16,14 +16,42 @@
             width: 100%;
             height: 100%;
             background-image: url('hntu.jpg');
-            background-size: cover;  /* Gambar mengisi seluruh layar */
+            background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .chat-button:hover {
+            background-color: #1da851;
         }
     </style>
 </head>
 <body>
     <div class="fullscreen-image"></div>
+
+    <a 
+        href="https://wa.me/6281383988829?text=kaget%20gw%20anjir" 
+        class="chat-button" 
+        target="_blank">
+        Chat WhatsApp
+    </a>
 
     <audio id="background-audio" autoplay>
         <source src="seram.mp3" type="audio/mpeg">
