@@ -200,7 +200,7 @@
             const menu = document.getElementById('menu').value;
             const quantity = parseInt(document.getElementById('quantity').value, 10);
 
-            if (!quantity || quantity < 1) {
+            if (!quantity || quantity < 1 || quantity > 10) {
                 alert('Silakan masukkan jumlah yang valid.');
                 return;
             }
