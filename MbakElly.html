@@ -109,6 +109,35 @@
         .cart button:hover {
             background-color: #006f70;
         }
+
+        /* Toast Notification Styles */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { bottom: 30px; opacity: 0; }
+            20% { bottom: 30px; opacity: 1; }
+            80% { bottom: 30px; opacity: 1; }
+            100% { bottom: 0px; opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -155,6 +184,10 @@
         <div class="cart-total" id="cart-total">Total Harga: Rp0</div>
         <button type="button" onclick="redirectToPayment()">Pesan Sekarang</button>
     </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Item berhasil ditambahkan ke keranjang!</div>
+
     <script>
         const cart = [];
         const prices = {
@@ -172,13 +205,12 @@
                 alert('Silakan masukkan jumlah yang valid.');
                 return;
             }
-            else if (quantity >= 11) {
-                alert('Maksimal pesanan 10 ya... kasian yang masak kebanyakan.');
-                return;
-            }
 
             cart.push({ menu, quantity, price: prices[menu] * quantity });
             updateCart();
+
+            // Show the toast notification
+            showToast(`Berhasil menambahkan ${quantity} ${menu} ke keranjang!`);
         }
 
         function updateCart() {
@@ -210,6 +242,16 @@
             const cartData = encodeURIComponent(JSON.stringify(cart));
             const paymentUrl = `pembayaran.html?cart=${cartData}`;
             window.open(paymentUrl);
+        }
+
+        // Function to show toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000); // Hide the toast after 3 seconds
         }
     </script>
 </body>

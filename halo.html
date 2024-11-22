@@ -8,20 +8,33 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%; /* Membuat body dan html mengisi seluruh layar */
+            height: 100%;
         }
 
         .fullscreen-image {
             width: 100%;
-            height: 100%; /* Membuat gambar mengisi seluruh layar */
-            background-image: url('hntu.jpg'); /* Ganti dengan path gambar Anda */
-            background-size: contain; /* Menjaga gambar tetap utuh tanpa terpotong */
-            background-position: center center; /* Menjaga gambar tetap terpusat */
-            background-repeat: no-repeat; /* Gambar tidak diulang */
+            height: 100%;
+            background-image: url('hntu.jpg');
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
 <body>
     <div class="fullscreen-image"></div>
+
+    <audio id="background-audio" autoplay>
+        <source src="seram.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('background-audio');
+            audio.play().catch(error => {
+                console.log('Pemutaran otomatis dicegah oleh browser:', error);
+            });
+        });
+    </script>
 </body>
 </html>
