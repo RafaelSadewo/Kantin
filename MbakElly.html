@@ -70,7 +70,7 @@
         }
         .cart {
             margin-top: 2rem;
-            background-color: white; /* Menambahkan background putih */
+            background-color: white;
             padding: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -114,7 +114,6 @@
         .toast {
             visibility: hidden;
             min-width: 250px;
-            margin-left: -125px;
             background-color: #333;
             color: white;
             text-align: center;
@@ -125,6 +124,7 @@
             left: 50%;
             bottom: 30px;
             font-size: 17px;
+            transform: translateX(-50%);
         }
 
         .toast.show {
@@ -133,10 +133,10 @@
         }
 
         @keyframes fadeInOut {
-            0% { bottom: 30px; opacity: 0; }
-            20% { bottom: 30px; opacity: 1; }
-            80% { bottom: 30px; opacity: 1; }
-            100% { bottom: 0px; opacity: 0; }
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
@@ -185,7 +185,6 @@
         <button type="button" onclick="redirectToPayment()">Pesan Sekarang</button>
     </section>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast">Item berhasil ditambahkan ke keranjang!</div>
 
     <script>
@@ -208,8 +207,6 @@
 
             cart.push({ menu, quantity, price: prices[menu] * quantity });
             updateCart();
-
-            // Show the toast notification
             showToast(`Berhasil menambahkan ${quantity} ${menu} ke keranjang!`);
         }
 
@@ -244,14 +241,13 @@
             window.open(paymentUrl);
         }
 
-        // Function to show toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerText = message;
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000); // Hide the toast after 3 seconds
+            }, 3000);
         }
     </script>
 </body>

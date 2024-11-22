@@ -70,7 +70,7 @@
         }
         .cart {
             margin-top: 2rem;
-            background-color: white; /* Menambahkan background putih */
+            background-color: white;
             padding: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -104,9 +104,39 @@
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 1rem;
         }
         .cart button:hover {
             background-color: #006f70;
+        }
+
+        /* Toast Notification Styles */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            transform: translateX(-50%);
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
@@ -154,6 +184,9 @@
         <div class="cart-total" id="cart-total">Total Harga: Rp0</div>
         <button type="button" onclick="redirectToPayment()">Pesan Sekarang</button>
     </section>
+
+    <div id="toast" class="toast">Item berhasil ditambahkan ke keranjang!</div>
+
     <script>
         const cart = [];
         const prices = {
@@ -174,6 +207,9 @@
 
             cart.push({ menu, quantity, price: prices[menu] * quantity });
             updateCart();
+
+            // Show the toast notification
+            showToast(`Berhasil menambahkan ${quantity} ${menu} ke keranjang!`);
         }
 
         function updateCart() {
@@ -205,6 +241,15 @@
             const cartData = encodeURIComponent(JSON.stringify(cart));
             const paymentUrl = `pembayaran.html?cart=${cartData}`;
             window.open(paymentUrl);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000); // Hide the toast after 3 seconds
         }
     </script>
 </body>
