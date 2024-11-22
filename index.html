@@ -34,11 +34,15 @@
             width: 250px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
         }
         .menu-item img {
             width: 100%;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
+        }
+        .menu-item:hover {
+            transform: scale(1.05);
         }
         .menu-item h3 {
             margin: 0.5rem 0;
@@ -54,7 +58,7 @@
             cursor: pointer;
         }
         .menu-item a:hover {
-            background-color: #006f70;
+            background-color: #006f70; /* Ubah warna tombol saat hover */
         }
     </style>
 </head>
@@ -65,12 +69,12 @@
     </header>
     <main class="menu">
         <div class="menu-item">
-            <img src="kayla.jpg" alt="Mba Elly">
+            <img src="MbakElly.jpg" alt="Mba Elly">
             <h3>Mba Elly</h3>
             <a href="MbakElly.html">Pesan</a>
         </div>
         <div class="menu-item">
-            <img src="kayla.jpg" alt="Minuman">
+            <img src="minum.jpg" alt="Minuman">
             <h3>Minuman</h3>
             <a href="minum.html">Pesan</a>
         </div>
