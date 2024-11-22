@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Pembayaran</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            background-image: url('FILKOM.jpg');
+            background-size: cover;  /* Membuat gambar latar belakang mengisi seluruh halaman */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed; /* Menjaga background tetap saat scroll */
+            height: 100vh; /* Menjamin bahwa tinggi halaman sesuai dengan ukuran viewport */
+        }
+        .payment-detail {
+            margin: 2rem auto;
+            max-width: 600px;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #004953;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .button {
+            display: block;
+            width: 80%; /* Lebar tombol */
+            text-align: center;
+            background-color: #004953;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 1rem auto; /* Menjaga tombol tetap terpusat */
+        }
+        .button:hover {
+            background-color: #006f70;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-detail">
+        <h1>Detail Pembayaran</h1>
+        <p id="order-detail"></p>
+        <a href="halo.html" class="button">Lanjutkan ke Pembayaran</a>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cartData = urlParams.get('cart');  // Mengambil data keranjang yang sudah terencode
+        
+        if (cartData) {
+            const cart = JSON.parse(decodeURIComponent(cartData));  // Menguraikan data JSON
+            
+            let orderDetails = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                orderDetails += `${item.menu} x${item.quantity} - Rp${item.price.toLocaleString()}\n`;
+                total += item.price;
+            });
+
+            orderDetails += `\nTotal Harga: Rp${total.toLocaleString()}`;
+            document.getElementById('order-detail').innerText = orderDetails;
+        } else {
+            document.getElementById('order-detail').innerText = 'Keranjang Anda kosong.';
+        }
+    </script>
+</body>
+</html>
